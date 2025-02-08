@@ -2,7 +2,7 @@
 
 ## Problem 
 
-Unable to auth using BAML with Vertex AI in Cloud Run. Need to use `AuthStrategy::SystemDefault` ("use the service account from the GCP compute environment by querying the metadata server") and not set `GOOGLE_APPLICATION_CREDENTIALS` because this. The `google-ai` provider via API key is a temporary workaround, but I have some "Business Requirements" that prevent me from doing that lol.
+Unable to auth using BAML with Vertex AI in Cloud Run. Need to use `AuthStrategy::SystemDefault` ("use the service account from the GCP compute environment by querying the metadata server") and not set `GOOGLE_APPLICATION_CREDENTIALS` because [this warning](https://cloud.google.com/run/docs/configuring/services/environment-variables). The `google-ai` provider via API key is a temporary workaround, but I have some "Business Requirements" that prevent me from doing that lol.
 
 [want to do it this way](https://github.com/BoundaryML/baml/blob/03735feb5b9e70ad6a872e1c5d0837eea43034df/engine/baml-runtime/src/internal/llm_client/primitive/vertex/std_auth.rs#L44)
 
