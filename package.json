@@ -1,0 +1,20 @@
+{
+  "name": "baml-vertex",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "baml-generate": "bunx baml-cli generate --from src/baml_src"
+  },
+  "dependencies": {
+    "@boundaryml/baml": "^0.75.0",
+    "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/swagger": "^1.2.0",
+    "elysia": "latest"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.2",
+    "bun-types": "latest"
+  },
+  "module": "src/index.js"
+}
