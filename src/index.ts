@@ -15,16 +15,19 @@ async function testBaml() {
 const app = new Elysia()
   .use(swagger({ path: "/docs" }))
   .use(cors())
-  .post("/test-local/baml", async () => {
-    try {
-      const result = await testBaml();
-      return { result, success: true };
-    } catch (error) {
-      return { error, success: false };
-    }
-  })
+  // This works locally auth'd with `gcloud auth application-default login`
+  // .post("/test-local/baml", async () => {
+  //   try {
+  //     const result = await testBaml();
+  //     return { result, success: true };
+  //   } catch (error) {
+  //     return { error, success: false };
+  //   }
+  // })
   .post("/test-gcp/baml", async () => {
     const debug = { metadata: {} };
+    let vertexResponse;
+    let result;
     try {
       // Metadata server checks
       const metadataChecks = {
@@ -56,7 +59,6 @@ const app = new Elysia()
       const projectId = metadata['project-id'];
       const location = process.env.GOOGLE_CLOUD_LOCATION || 'us-west1';
       
-      // Test Vertex AI (No BAML)
       const response = await fetch(
         `https://${location}-aiplatform.googleapis.com/v1/projects/${projectId}/locations/${location}/publishers/google/models/gemini-2.0-flash-001:streamGenerateContent`, 
         {
@@ -74,13 +76,13 @@ const app = new Elysia()
         }
       );
 
-      const vertexResponse = await response.json();
+      vertexResponse = await response.json();
       
       // Test BAML Vertex AI Client
-      const result = await testBaml();
+      result = await testBaml();
       return { result, vertexResponse, success: true };
     } catch (error) {
-      return { error, debug, success: false };
+      return { error, debug, success: false, result, vertexResponse };
     }
   })
   .listen(8080);
