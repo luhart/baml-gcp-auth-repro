@@ -6,7 +6,7 @@ import { b } from "./baml_client";
 
 // Placeholder for baml function
 async function testBaml() {
-  const result = await b.ExtractResume(
+  const result = b.ExtractResume(
     "John Doe\n\nEducation\n- University of California, Berkeley\n  - B.S. in Computer Science\n  - 2020\n\nSkills\n- Python\n- Java\n- C++"
   );
   return result;
