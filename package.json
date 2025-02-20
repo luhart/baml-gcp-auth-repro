@@ -7,7 +7,7 @@
     "baml-generate": "bunx baml-cli generate --from src/baml_src"
   },
   "dependencies": {
-    "@boundaryml/baml": "^0.75.0",
+    "@boundaryml/baml": "^0.76.2",
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/swagger": "^1.2.0",
     "elysia": "latest"
