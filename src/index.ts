@@ -6,8 +6,8 @@ import { b } from "./baml_client";
 
 // Placeholder for baml function
 async function testBaml() {
-  const result = b.ExtractResume(
-    "John Doe\n\nEducation\n- University of California, Berkeley\n  - B.S. in Computer Science\n  - 2020\n\nSkills\n- Python\n- Java\n- C++"
+  const result = b.ExtractPerson(
+    "My name is John Doe and I am 30 years old."
   );
   return result;
 }
@@ -70,7 +70,7 @@ const app = new Elysia()
           body: JSON.stringify({
             contents: [{
               role: 'user',
-              parts: [{ text: 'Hello' }]
+              parts: [{ text: 'Hello, how are you?' }]
             }]
           })
         }

@@ -1,27 +1,21 @@
 
-class Resume {
+class Person {
   name string
-  education Education[] @description("Extract in the same order listed")
-  skills string[] @description("Only include programming languages")
+  age int
 }
 
-class Education {
-  school string
-  degree string
-  year int
-}
 
-function ExtractResume(resume_text: string) -> Resume {
+function ExtractPerson(text_input: string) -> Person {
   // see clients.baml
   client GeminiClient
 
   // The prompt uses Jinja syntax. Change the models or this text and watch the prompt preview change!
   prompt #"
-    Parse the following resume and return a structured representation of the data in the schema below.
+    Parse the following text and return a structured representation of the data in the schema below.
 
-    Resume:
+    Text:
     ---
-    {{ resume_text }}
+    {{ text_input }}
     ---
 
     {# special macro to print the output instructions. #}
@@ -32,20 +26,10 @@ function ExtractResume(resume_text: string) -> Resume {
 }
 
 test Test1 {
-  functions [ExtractResume]
+  functions [ExtractPerson]
   args {
-    resume_text #"
-      John Doe
-
-      Education
-      - University of California, Berkeley
-        - B.S. in Computer Science
-        - 2020
-
-      Skills
-      - Python
-      - Java
-      - C++
+    text_input #"
+      My name is John Doe and I am 30 years old.
     "#
   }
 }
