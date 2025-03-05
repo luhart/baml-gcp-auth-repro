@@ -29,54 +29,54 @@ const app = new Elysia()
     let vertexResponse;
     let result;
     try {
-      // Metadata server checks
-      const metadataChecks = {
-        'project-id': '/computeMetadata/v1/project/project-id',
-        'service-account': '/computeMetadata/v1/instance/service-accounts/default/email',
-        'token': '/computeMetadata/v1/instance/service-accounts/default/token'
-      };
+      // // Metadata server checks
+      // const metadataChecks = {
+      //   'project-id': '/computeMetadata/v1/project/project-id',
+      //   'service-account': '/computeMetadata/v1/instance/service-accounts/default/email',
+      //   'token': '/computeMetadata/v1/instance/service-accounts/default/token'
+      // };
 
-      interface MetadataResponse {
-        [key: string]: string;
-      }
+      // interface MetadataResponse {
+      //   [key: string]: string;
+      // }
 
-      const metadata: MetadataResponse = {};
+      // const metadata: MetadataResponse = {};
 
-      for (const [key, path] of Object.entries(metadataChecks)) {
-        const response = await fetch(`http://metadata.google.internal${path}`, {
-          headers: { 'Metadata-Flavor': 'Google' }
-        });
-        metadata[key] = await response.text();
-        debug.metadata = metadata;
-      }
+      // for (const [key, path] of Object.entries(metadataChecks)) {
+      //   const response = await fetch(`http://metadata.google.internal${path}`, {
+      //     headers: { 'Metadata-Flavor': 'Google' }
+      //   });
+      //   metadata[key] = await response.text();
+      //   debug.metadata = metadata;
+      // }
 
-      // Test direct Vertex AI access
-      interface TokenResponse {
-        access_token: string;
-      }
-      const tokenData = JSON.parse(metadata['token']) as TokenResponse;
-      const token = tokenData.access_token;
-      const projectId = metadata['project-id'];
-      const location = process.env.GOOGLE_CLOUD_LOCATION || 'us-west1';
+      // // Test direct Vertex AI access
+      // interface TokenResponse {
+      //   access_token: string;
+      // }
+      // const tokenData = JSON.parse(metadata['token']) as TokenResponse;
+      // const token = tokenData.access_token;
+      // const projectId = metadata['project-id'];
+      // const location = process.env.GOOGLE_CLOUD_LOCATION || 'us-west1';
       
-      const response = await fetch(
-        `https://${location}-aiplatform.googleapis.com/v1/projects/${projectId}/locations/${location}/publishers/google/models/gemini-2.0-flash-001:streamGenerateContent`, 
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            contents: [{
-              role: 'user',
-              parts: [{ text: 'Hello, how are you?' }]
-            }]
-          })
-        }
-      );
+      // const response = await fetch(
+      //   `https://${location}-aiplatform.googleapis.com/v1/projects/${projectId}/locations/${location}/publishers/google/models/gemini-2.0-flash-001:streamGenerateContent`, 
+      //   {
+      //     method: 'POST',
+      //     headers: {
+      //       'Authorization': `Bearer ${token}`,
+      //       'Content-Type': 'application/json'
+      //     },
+      //     body: JSON.stringify({
+      //       contents: [{
+      //         role: 'user',
+      //         parts: [{ text: 'Hello, how are you?' }]
+      //       }]
+      //     })
+      //   }
+      // );
 
-      vertexResponse = await response.json();
+      // vertexResponse = await response.json();
       
       // Test BAML Vertex AI Client
       result = await testBaml();

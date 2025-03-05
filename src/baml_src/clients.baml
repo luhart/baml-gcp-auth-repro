@@ -14,7 +14,7 @@
 client<llm> GeminiClient {
   provider vertex-ai
   options {
-    model "gemini-2.0-flash-001"
+    model "gemini-2.0-flash"
     location us-west1
   }
 }
